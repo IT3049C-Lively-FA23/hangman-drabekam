@@ -21,35 +21,66 @@ let canvas = document.getElementById(`hangmanCanvas`);
 // The following Try-Catch Block will catch the errors thrown
 try {
   // Instantiate a game Object using the Hangman class.
+  const game = new Hangman(canvas);
 
-  // add a submit Event Listener for the to the difficultySelectionForm
-  //    get the difficulty input
-  //    call the game start() method, the callback function should do the following
-  //       1. hide the startWrapper
-  //       2. show the gameWrapper
-  //       3. call the game getWordHolderText and set it to the wordHolderText
-  //       4. call the game getGuessesText and set it to the guessesText
-  difficultySelectForm.addEventListener(`submit`, function (event) {});
+  // Add a submit Event Listener for the difficultySelectionForm
+  difficultySelectForm.addEventListener(`submit`, function (event) {
+    event.preventDefault(); // Prevent form from submitting normally
+    const difficulty = difficultySelect.value; // Get the difficulty input
 
-  // add a submit Event Listener to the guessForm
-  //    get the guess input
-  //    call the game guess() method
-  //    set the wordHolderText to the game.getHolderText
-  //    set the guessesText to the game.getGuessesText
-  //    clear the guess input field
-  // Given the Guess Function calls either the checkWin or the onWrongGuess methods
-  // the value of the isOver and didWin would change after calling the guess() function.
-  // Check if the game isOver:
-  //      1. disable the guessInput
-  //      2. disable the guessButton
-  //      3. show the resetGame button
-  // if the game is won or lost, show an alert.
-  guessForm.addEventListener(`submit`, function (e) {});
+    // Call the game start() method
+    game.start(difficulty, function () {
+      // Callback function actions
+      startWrapper.style.display = `none`; // 1. Hide the startWrapper
+      gameWrapper.style.display = `block`; // 2. Show the gameWrapper
+      wordHolderText.textContent = game.getWordHolderText(); // 3. Update wordHolderText
+      guessesText.textContent = game.getGuessesText(); // 4. Update guessesText
+    });
+  });
 
-  // add a click Event Listener to the resetGame button
-  //    show the startWrapper
-  //    hide the gameWrapper
-  resetGame.addEventListener(`click`, function (e) {});
+  // Add a submit Event Listener to the guessForm
+  guessForm.addEventListener(`submit`, function (e) {
+    e.preventDefault(); // Prevent form from submitting normally
+    const guess = guessInput.value.trim(); // Get the guess input
+
+    try {
+      game.guess(guess); // Call the game guess() method
+      wordHolderText.textContent = game.getWordHolderText(); // Update the wordHolderText
+      guessesText.textContent = game.getGuessesText(); // Update the guessesText
+    } catch (error) {
+      alert(error); // Show error if any from guessing
+    }
+
+    guessInput.value = ""; // Clear the guess input field
+
+    // Check if the game is over
+    if (game.isOver) {
+      guessInput.disabled = true; // Disable the guessInput
+      document.getElementById(`guessButton`).disabled = true; // Disable the guessButton
+      resetGame.style.display = `block`; // Show the resetGame button
+
+      // Alert win or loss
+      if (game.didWin) {
+        alert("Congratulations, you've won!");
+      } else {
+        alert("Game Over. Try again!");
+      }
+    }
+  });
+
+  // Add a click Event Listener to the resetGame button
+  resetGame.addEventListener(`click`, function (e) {
+    e.preventDefault();
+    startWrapper.style.display = `block`; // Show the startWrapper
+    gameWrapper.style.display = `none`; // Hide the gameWrapper
+    resetGame.style.display = `none`; // Hide the reset button
+    guessInput.disabled = false; // Re-enable the guessInput
+    document.getElementById(`guessButton`).disabled = false; // Re-enable the guessButton
+
+    // Reset game state if needed
+    // Note: This might require additional logic to reset the game object completely,
+    // depending on the Hangman class implementation.
+  });
 } catch (error) {
   console.error(error);
   alert(error);
