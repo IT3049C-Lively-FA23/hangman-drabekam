@@ -35,7 +35,7 @@ class Hangman {
       this.clearCanvas();
       this.drawBase();
       this.guesses = [];
-      this.word = word;
+      this.word = word.toUpperCase();
       this.isOver = false;
       this.didWin = false;
       if (next) {
@@ -49,6 +49,9 @@ class Hangman {
    * @param {string} letter the guessed letter.
    */
   guess(letter) {
+
+    console.log('Current word:', this.word);
+    //^^ adding this for debug
     // Add check to ensure this.word is defined before proceeding
     if (!this.word) {
       throw new Error("The game has not started. Please select a difficulty and start the game.");
@@ -71,7 +74,7 @@ class Hangman {
     if (isWin) {
       this.didWin = true;
       this.isOver = true;
-      alert("Congratulations, you won!");
+      // alert("Congratulations, you won!"); removing this since its alerting twice
     }
   }
 

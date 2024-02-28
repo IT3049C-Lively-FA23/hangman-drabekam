@@ -56,7 +56,7 @@ try {
     // Check if the game is over
     if (game.isOver) {
       guessInput.disabled = true; // Disable the guessInput
-      document.getElementById(`guessButton`).disabled = true; // Disable the guessButton
+      document.getElementById(`guessSubmitButton`).disabled = true; // Disable the guessButton
       resetGame.style.display = `block`; // Show the resetGame button
 
       // Alert win or loss
@@ -75,7 +75,7 @@ try {
     gameWrapper.style.display = `none`; // Hide the gameWrapper
     resetGame.style.display = `none`; // Hide the reset button
     guessInput.disabled = false; // Re-enable the guessInput
-    document.getElementById(`guessButton`).disabled = false; // Re-enable the guessButton
+    document.getElementById(`guessSubmitButton`).disabled = false; // Re-enable the guessButton
 
     // Reset game state if needed
     // Note: This might require additional logic to reset the game object completely,
