@@ -50,7 +50,7 @@ class Hangman {
    */
   guess(letter) {
 
-    // console.log('Current word:', this.word);
+    console.log('Current word:', this.word);
     //^^ adding this for debug
     // Add check to ensure this.word is defined before proceeding
     if (!this.word) {
@@ -95,7 +95,8 @@ class Hangman {
         this.drawRightLeg();
         this.isOver = true;
         this.didWin = false;
-        alert("Game Over. You lost.");
+        document.getElementById(`resetGame`).style.display = `block`; //testing fix for reset button now showing on loss
+        //alert("Game Over. You lost.");
         break;
     }
   }
