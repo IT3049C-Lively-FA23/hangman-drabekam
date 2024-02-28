@@ -50,7 +50,7 @@ class Hangman {
    */
   guess(letter) {
 
-    console.log('Current word:', this.word);
+    // console.log('Current word:', this.word);
     //^^ adding this for debug
     // Add check to ensure this.word is defined before proceeding
     if (!this.word) {
